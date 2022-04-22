@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Игра: кликни по тексту</title>
+</head>
+
+<body>
+  <h1 id="heading">Кликни меня!</h1>
+  <script src="https://code.jquery.com/jquery-2.1.0.js"></script>
+  <script>
+         //Анимация элементов с помощью setInterval
+         //движение заголовка по квадрату
+          var leftOffset = 0;
+          var topOffset = 0;
+          var moveHeading= function () {
+
+           if(leftOffset < 200 && topOffset === 0) {
+             $("#heading").offset({ left: leftOffset, top: topOffset });
+             leftOffset++;
+            } else {
+              if (leftOffset === 200 && topOffset < 200) {
+                $("#heading").offset({ left: leftOffset, top: topOffset });
+                topOffset++;
+              } else {
+                if (leftOffset > 0 && topOffset === 200) {
+                  $("#heading").offset({ left: leftOffset, top: topOffset });
+                  leftOffset--;
+                } else {
+                  if (leftOffset === 0 && topOffset > 0) {
+                    $("#heading").offset({ left: leftOffset, top: topOffset });
+                    topOffset--;
+                }
+              }
+            }
+          }
+
+          
+          };
+
+          var clickCounter = 0;
+          var time = 30;
+          var intervalId = setInterval(moveHeading, time);
+        
+          
+
+          //ускорение движеня по клику на движущийся текст
+          //на 11 клик надпись: Вы победили
+          $("h1").click (function () {
+            if (clickCounter < 10) {
+              clickCounter++;
+              $("h1").text(clickCounter + "-е попадание!");
+              clearInterval(intervalId);
+              intervalId = setInterval(moveHeading, time - 3 * clickCounter);
+            } else {
+                $("h1").text("Вы победили!");
+                
+                clearInterval(intervalId);
+            }
+          });
+  </script>
+</body>
+
+</html>
